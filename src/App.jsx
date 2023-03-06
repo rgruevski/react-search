@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
+import HeaderSelection from './components/HeaderSelection';
+import GetXLSX from './components/ImportExcelData';
 
-const data = [
-  { id: 1, name: 'Apple', category: 'Fruits' },
-  { id: 2, name: 'Banana', category: 'Fruits' },
-  { id: 3, name: 'Carrot', category: 'Vegetables' },
-  { id: 4, name: 'Eggplant', category: 'Vegetables' },
-];
+const xlsxData = GetXLSX();
 
 export default function App() {
   const [search, setSearch] = useState('');
@@ -25,26 +22,28 @@ export default function App() {
     setSearch(event.target.value);
   };
 
-  const handleCategoryChange = (event) => {
+  const handleHeaderSubmit = (event) => {
     setCategory(event.target.value);
   };
 
   return (
     <div className="container">
-      <h3>Search</h3>
+      <h3 className="sTitle">Search</h3>
       <div className="search-form">
-        <input type="text" placeholder="Search..." value={search} onChange={handleSearchChange} className="input"/>
-        <select value={category} onChange={handleCategoryChange}>
-          <option value="">All categories</option>
-          <option value="Fruits">Fruits</option>
-          <option value="Vegetables">Vegetables</option>
-        </select>
+        <input
+          type="text"
+          placeholder="Search with text..."
+          value={search}
+          onChange={handleSearchChange}
+          className="input" />
+      </div>
+      <div className="headerSelection">
+        <HeaderSelection onHeaderSubmit={handleHeaderSubmit} />
       </div>
       <div className="results">
         {filteredData.map((item) => (
           <div key={item.id} className="item">
-            <p>Name: {item.name}</p>
-            <p>Category: {item.category}</p>
+            <p>{item.name}</p>
           </div>
         ))}
       </div>
